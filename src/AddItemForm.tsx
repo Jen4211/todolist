@@ -1,4 +1,5 @@
-import { Button } from "@mui/material";
+import { AddBox } from "@mui/icons-material";
+import { Button, IconButton, TextField } from "@mui/material";
 import { ChangeEvent, FC, KeyboardEvent, useState } from "react";
 
 
@@ -32,13 +33,18 @@ const AddItemForm: FC<AddItemFormPropsType> = (props) => {
     return (
 
         <div>
-            <input value={title}
+            <TextField variant="outlined"
+                value={title}
                 onChange={onChangeHendler}
                 onKeyPress={onKeyPressHendler}
-                className={error ? 'error' : ''} />
-            <Button style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' }}
-                onClick={addItem}> + </ Button>
-            {error && <div className="error-message">{error}</div>}
+                error={!!error}
+                label='Title'
+                helperText={error} />
+            <IconButton
+                color="primary"
+                onClick={addItem}>
+                <AddBox />
+            </IconButton>
         </div>
     )
 
