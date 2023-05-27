@@ -32,7 +32,9 @@ type ActionType = RemoveTaskActionType
     | RemoveTodolistActionType
     | AddTodolistActionType;
 
-export const tasksReducer = (state: TaskStateType, action: ActionType): TaskStateType => {
+const initialState: TaskStateType = {};
+
+export const tasksReducer = (state: TaskStateType = initialState, action: ActionType): TaskStateType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             const stateCopy = { ...state }
@@ -48,20 +50,19 @@ export const tasksReducer = (state: TaskStateType, action: ActionType): TaskStat
             return stateCopy;
         }
         case "CHANGE-TASK-STATUS": {
-            const stateCopy = { ...state };
-            let task = stateCopy[action.todolistId].find(t => t.id === action.taskId);
-            if (task) {
-                task.isDone = action.isDone;
-            }
-            return stateCopy;
+            let todolistTasks = state[action.todolistId]
+            
+            state[action.todolistId] = todolistTasks.map(t => t.id === action.taskId
+                ? {...t, isDone: action.isDone}
+                : t);
+            return ({ ...state });
         }
         case "CHANGE-TITLE-STATUS": {
-            const stateCopy = { ...state };
-            let task = stateCopy[action.todolistId].find(t => t.id === action.taskId);
-            if (task) {
-                task.title = action.newTitle
-            }
-            return stateCopy;
+            let todolistTasks = state[action.todolistId];
+            state[action.todolistId] = todolistTasks.map(t => t.id === action.taskId
+                ? {...t, title: action.newTitle}
+                : t);
+            return ({...state});
         }
         case "ADD-TODOLIST": {
             const stateCopy = { ...state };
@@ -69,13 +70,13 @@ export const tasksReducer = (state: TaskStateType, action: ActionType): TaskStat
             return stateCopy;
         }
         case "REMOVE-TODOLIST": {
-            const stateCopy = {...state};
+            const stateCopy = { ...state };
             delete stateCopy[action.id];
             return stateCopy;
         }
 
         default:
-            throw new Error("I don't understand this action type");
+            return state;
     }
 }
 

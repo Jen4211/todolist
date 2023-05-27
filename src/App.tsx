@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import AddItemForm from './AddItemForm';
-import { TaskType, Todolist } from './Todolist';
+import { TasksType, Todolist } from './Todolist';
 import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 
@@ -15,7 +15,7 @@ export type TodolistType = {
 export type FilterValueType = 'all' | 'active' | 'completed';
 
 export type TaskStateType = {
-  [key: string]: Array<TaskType>
+  [key: string]: Array<TasksType>
 }
 
 
