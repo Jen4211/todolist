@@ -1,12 +1,13 @@
 
-import { ChangeEvent, useCallback } from "react";
-import { FilterValueType } from "./App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
-import { Button, Checkbox, IconButton } from "@mui/material";
+import { useCallback } from "react";
+import { FilterValueType } from "./App/App";
+
+import EditableSpan from "./EditableSpan/EditableSpan";
+import { Button, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import React from "react";
 import { Task } from "./Task";
+import AddItemForm from "./AddItemForm/AddItemForm";
 
 export type TasksType = {
   id: string
@@ -59,9 +60,11 @@ export const Todolist = React.memo((props: PropsType) => {
   let tasksForTodolist = props.tasks;
 
   if (props.filter === "active") {
+   
     tasksForTodolist = props.tasks.filter(el => el.isDone === false)
   }
   if (props.filter === "completed") {
+    
     tasksForTodolist = props.tasks.filter(el => el.isDone === true)
   }
   return (
@@ -77,7 +80,7 @@ export const Todolist = React.memo((props: PropsType) => {
       <AddItemForm addTask={addTask} />
 
       <div>
-        {props.tasks.map(t => 
+        {tasksForTodolist.map(t =>
           <Task task={t}
             changeTaskStatus={props.changeTaskStatus}
             changeTitleStatus={props.changeTitleStatus}
